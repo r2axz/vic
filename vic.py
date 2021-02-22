@@ -59,6 +59,7 @@ if __name__ == '__main__':
         impedances = s21_shunt_through_impedance(z0, s_arrays[:, 1, 0])
     else:
         print(f'Unknown measurement type: {args.type}', file=stderr)
+        sys_exit(1)
     with open(args.output, 'w') as output_file:
         output_writer = csv_writer(output_file)
         for frequency, impedance in zip(frequencies, impedances):
