@@ -19,7 +19,7 @@ class MeasurementType(Enum):
         return self.value
 
 def s11_shunt_impedance(z0, s11):
-    return (z0 * (1 + s11)) / (1 - s11)
+    return z0 * ((1 + s11) / (1 - s11))
 
 def s21_series_impedance(z0, s21):
     return z0 * (2 * (1 - s21)) / (s21)
