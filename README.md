@@ -22,7 +22,7 @@ python vic.py -h
 ```powershell
 python3 -m venv .env
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-.env/bin/Activate.ps1
+.env/Scripts/Activate.ps1
 pip install -r requirements.txt
 python vic.py -h
 ```
