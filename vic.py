@@ -10,37 +10,44 @@ from enum import Enum
 from matplotlib import pyplot as plt, ticker
 from numpy import real as np_real, imag as np_imag, absolute as np_abs, log10 as np_log10
 
+
 class MeasurementType(Enum):
-    s11_shunt         = 's11_shunt'
-    s21_series        = 's21_series'
+    s11_shunt = 's11_shunt'
+    s21_series = 's21_series'
     s21_shunt_through = 's21_shunt_through'
 
     def __str__(self):
         return self.value
 
+
 def s11_shunt_impedance(z0, s11):
     return z0 * ((1 + s11) / (1 - s11))
+
 
 def s21_series_impedance(z0, s21):
     return z0 * (2 * (1 - s21)) / (s21)
 
+
 def s21_shunt_through_impedance(z0, s21):
     return (z0 * s21) / (2 * (1 - s21))
 
+
 if __name__ == '__main__':
     argument_parser = ArgumentParser(formatter_class=ArgumentDefaultsHelpFormatter)
-    argument_parser.add_argument('--type', '-t', type=MeasurementType, choices=list(MeasurementType), default=MeasurementType.s11_shunt)
+    argument_parser.add_argument('--type', '-t', type=MeasurementType, choices=list(MeasurementType),
+                                 default=MeasurementType.s11_shunt)
     argument_parser.add_argument('--z0', '-z', type=complex, help='system impedance')
-    argument_parser.add_argument('--output', '-o', type=str, help='output file name', default='impedace.csv')
+    argument_parser.add_argument('--output', '-o', type=str, help='output file name', default='impedance.csv')
     argument_parser.add_argument('--plot', '-p', action='store_true', help='show impedance plot')
     argument_parser.add_argument('--xkcd', '-x', action='store_true', help='turn on xkcd sketch-style drawing mode')
-    argument_parser.add_argument('--refs', '-r', action='store_true', help='turn on impedance range referencies (for common mode chokes)')
+    argument_parser.add_argument('--refs', '-r', action='store_true',
+                                 help='turn on impedance range references (for common mode chokes)')
     argument_parser.add_argument('--abs', '-a', action='store_true', help='plot absolute reactance values')
     argument_parser.add_argument('--bands', '-b', action='store_true', help='turn on HF band ranges')
     argument_parser.add_argument('--title', type=str, help='Plot title')
     argument_parser.add_argument('--width', type=float, help='Plot width (inches)', default=15)
     argument_parser.add_argument('--height', type=float, help='Plot height (inches)', default=10)
-    argument_parser.add_argument('--isolation', '-i', action='store_true', help='plot isolaton (insertion loss)')
+    argument_parser.add_argument('--isolation', '-i', action='store_true', help='plot isolation (insertion loss)')
     argument_parser.add_argument('filename', type=str, help='touchstone S-parameters file name')
     args = argument_parser.parse_args()
     try:
