@@ -62,11 +62,12 @@ if __name__ == '__main__':
     else:
         try:
             _, z0 = touchstone.get_gamma_z0()
+            if z0.ndim > 1 : z0 = z0[:,0] # bug impedance Z0 have two dimension
             print('Using touchstone system impedance')
         except:
             print('Unknown system impedance, use -z', file=stderr)
             sys_exit(1)
-    print(f'System impedance (z0): {z0}')
+    print(f'System impedance (z0): {z0[0]}')
     print(f'Measurement type: {args.type}')
     frequencies, s_arrays = touchstone.get_sparameter_arrays()
     if args.type == MeasurementType.s11_shunt:
@@ -83,6 +84,7 @@ if __name__ == '__main__':
         output_writer = csv_writer(output_file)
         for frequency, impedance in zip(frequencies, impedances):
             output_writer.writerow([frequency, impedance])
+    
     if args.plot:
         if args.xkcd:
             plt.xkcd(0.35, 75, 150)
